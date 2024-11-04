@@ -62,10 +62,12 @@ func TestRedisRateLimiter(t *testing.T) {
 		resp, err := client.Do(req)
 		assert.NoError(t, err)
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		resp.Body.Close()
 	}
 
 	req, _ := http.NewRequest("GET", testServer.URL+"/", nil)
 	resp, err := client.Do(req)
+	defer resp.Body.Close()
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusTooManyRequests, resp.StatusCode)
 
@@ -76,11 +78,13 @@ func TestRedisRateLimiter(t *testing.T) {
 		resp, err := client.Do(req)
 		assert.NoError(t, err)
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		resp.Body.Close()
 	}
 
 	req, _ = http.NewRequest("GET", testServer.URL+"/", nil)
 	req.Header.Set("API_KEY", token)
 	resp, err = client.Do(req)
+	defer resp.Body.Close()
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusTooManyRequests, resp.StatusCode)
 
@@ -88,6 +92,7 @@ func TestRedisRateLimiter(t *testing.T) {
 
 	req, _ = http.NewRequest("GET", testServer.URL+"/", nil)
 	resp, err = client.Do(req)
+	defer resp.Body.Close()
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusOK, resp.StatusCode)
 }
