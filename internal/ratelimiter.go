@@ -81,7 +81,7 @@ func rateLimiterMiddleware(next http.Handler) http.Handler {
 
 		limitPerIP, _ := getEnv("RATE_LIMIT_PER_IP", 1)
 		limitPerToken, _ := getEnv("RATE_LIMIT_PER_TOKEN", 2)
-		timeBlock, _ := getEnv("RATE_LIMIT_TIME_BLOCK", 5)
+		timeBlock, _ := getEnv("RATE_LIMIT_TIME_BLOCK", 10)
 
 		duration := time.Duration(timeBlock) * time.Second
 
