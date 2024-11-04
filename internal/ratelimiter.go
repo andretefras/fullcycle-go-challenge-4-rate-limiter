@@ -39,12 +39,15 @@ func (r RedisRateLimiter) LimitReached(key string, limit int, duration time.Dura
 	}
 
 	if count >= limit {
+		r.client.Expire(ctx, key, duration)
 		return true, nil
 	}
 
 	tx := r.client.TxPipeline()
 	tx.Incr(ctx, key)
-	tx.Expire(ctx, key, duration)
+	if count == 0 {
+		tx.Expire(ctx, key, time.Second)
+	}
 	_, err = tx.Exec(ctx)
 
 	if err != nil {

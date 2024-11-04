@@ -35,7 +35,7 @@ func setupTestRedis() *redis.Client {
 func TestRedisRateLimiter(t *testing.T) {
 	os.Setenv("RATE_LIMIT_PER_IP", "100")
 	os.Setenv("RATE_LIMIT_PER_TOKEN", "120")
-	os.Setenv("RATE_LIMIT_TIME_BLOCK", "5")
+	os.Setenv("RATE_LIMIT_TIME_BLOCK", "3")
 
 	redisClient := setupTestRedis()
 	redisClient.FlushDB(testCtx)

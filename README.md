@@ -20,6 +20,8 @@ Para iniciar o servidor http execute o comando:
 
 As chamadas para o servidor http poderão ser feitas através do arquivo `api/hello_world.http`
 
+É importante destacar que o rate limiter configurado por token sobrepoe o rate limiter configurado por ip. Ou seja, se o rate limiter por ip for atingido, caso um token seja informado, poderá continuar a realizar requisições dentro do limite configurado. 
+
 A strategy do RateLimiter poderá ser expandida a partir de novas implementações da interface encontrada em:
 
 `internal/ratelimiter.go:21`
